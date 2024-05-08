@@ -1,0 +1,46 @@
+def issafe(mat, r, c):
+    
+    #this checks if queen is present in same row and same column
+    #if this is unsafe to to put the queen their it will return false
+    for i in range(r):
+        if mat[i][c] == 'Q':
+            return False
+    #this checks if queen is placed in / diagonol
+    i, j = r, c
+    while i >= 0 and j >= 0:
+        if mat[i][j] == 'Q':
+            return False
+    #this will decrement the i i.e row and decrement the column to left 
+        i -= 1
+        j -= 1
+    
+    # #this checks if queen is placed in \ diagonol
+    i, j = r, c
+    while i >= 0 and j < len(mat):
+        if mat[i][j] == 'Q':
+            return False
+     #this will decrement the i i.e row and increment the column to right 
+        i -= 1
+        j += 1
+    return True
+
+def PrintSolution(mat):
+    for r in mat:
+        print(" ".join(r))
+    print()
+
+def n_queens(mat, r):
+    if r == len(mat):
+        PrintSolution(mat)
+        return
+
+    for i in range(len(mat)):
+        if issafe(mat, r, i):
+            mat[r][i] = "Q"
+            n_queens(mat, r + 1)
+            mat[r][i] = "-"
+
+if __name__ == "__main__":
+    N = 4
+    mat = [["-" for _ in range(N)] for _ in range(N)]
+    n_queens(mat, 0)
